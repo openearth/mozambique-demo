@@ -1,0 +1,7 @@
+<template>
+	<div>
+    <!-- layer -->
+  </div>
+</template>
+<!-- script is lowercase -->
+<script src="./v-mapbox-layer.js"></script>
