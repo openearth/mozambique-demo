@@ -11,6 +11,14 @@ export default {
     accessToken: {
       type: String,
       required: true
+    },
+    center: {
+      type: Array,
+      required: false
+    },
+    zoom: {
+      type: Number,
+      required: false
     }
   },
   mounted () {
@@ -20,6 +28,11 @@ export default {
       container: 'map',
       style: 'mapbox://styles/mapbox/satellite-streets-v10'
     };
+    console.log('center', this.center);
+    if (this.center) {
+      options.center = this.center;
+    }
+    options.zoom = this.zoom;
     this.map = new mapboxgl.Map(options);
     this.map.on('load', () => {
       _.each(

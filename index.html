@@ -7,7 +7,11 @@
   <body>
 
     <div id="app">
-      <v-mapbox access-token="pk.eyJ1Ijoic2lnZ3lmIiwiYSI6Il8xOGdYdlEifQ.3-JZpqwUa3hydjAJFXIlMA">
+      <v-mapbox
+        access-token="pk.eyJ1Ijoic2lnZ3lmIiwiYSI6Il8xOGdYdlEifQ.3-JZpqwUa3hydjAJFXIlMA"
+        :center="[34.85752836605343, -19.830506337137294]"
+        zoom="10"
+        >
         <div> {{ JSON.stringify(sources) }} </div>
         <v-mapbox-source
           :options="source"

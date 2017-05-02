@@ -37,20 +37,56 @@ new Vue({
 
         },
         {
-          'id': 'extremes-100',
+          'id': 'extremes-100y-lonlat-8rk0vo',
           'type': 'circle',
           'source': {
-            'url': 'mapbox://siggyf.4vbhd90k',
+            'url': 'mapbox://siggyf.7seqzord',
             'type': 'vector'
 
           },
-          'source-layer': 'extremes_100y-cnc4ty',
+
+          'source-layer': 'extremes_100y_lonlat-8rk0vo',
+          'layout': {
+            'visibility': 'visible'
+          },
           'paint': {
-            'circle-color': '#fbb03b'
-
+            'circle-color': {
+              'base': 1,
+              'type': 'exponential',
+              'property': 'extreme',
+              'stops': [
+                [
+                  0,
+                  'hsl(123, 70%, 57%)'
+                ],
+                [
+                  3,
+                  'hsl(31, 70%, 57%)'
+                ],
+                [
+                  6,
+                  'hsl(0, 70%, 57%)'
+                ]
+              ]
+            },
+            'circle-radius': {
+              'base': 1,
+              'type': 'exponential',
+              'property': 'extreme',
+              'stops': [
+                [
+                  0,
+                  2
+                ],
+                [
+                  6,
+                  5
+                ]
+              ]
+            }
           }
-
         }
+
       ],
       sources: [
       ]
