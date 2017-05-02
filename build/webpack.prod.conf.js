@@ -18,7 +18,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
-    })
+    }),
+    // https://github.com/mapbox/mapbox-gl-js/issues/4359
+    noParse: /(mapbox-gl)\.js$/
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {

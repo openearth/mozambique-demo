@@ -8,6 +8,11 @@
 
     <div id="app">
       <v-mapbox access-token="pk.eyJ1Ijoic2lnZ3lmIiwiYSI6Il8xOGdYdlEifQ.3-JZpqwUa3hydjAJFXIlMA">
+        <div> {{ JSON.stringify(sources) }} </div>
+        <v-mapbox-source
+          :options="source"
+          v-for="source in sources"
+          :key="source.id"></v-mapbox-source>
         <v-mapbox-layer
           :options="layer"
           v-for="layer in layers"
