@@ -18,12 +18,12 @@ const props = {
   container: {
     type: [HTMLElement, String]
   },
-  // minZoom: {
-  //   type: Number
-  // },
-  // maxZoom: {
-  //   type: Number
-  // },
+  minZoom: {
+    type: Number
+  },
+  maxZoom: {
+    type: Number
+  },
   // can't use style (reserved), use same approach as uber/react-map-gl
   mapStyle: {
     type: [Object, String]
@@ -117,9 +117,11 @@ const props = {
 };
 
 export default {
+  name: 'v-mapbox',
   data () {
     return {
-      map: null
+      map: null,
+      layers: []
     };
   },
   props: props,
@@ -147,12 +149,14 @@ export default {
         this.$children,
         (child) => {
           child.deferredMountedTo(this.map);
+          if (child.$options.name === 'v-mapbox-layer') {
+            this.layers.push(child.options);
+          }
         }
       );
     });
 
   },
   methods: {
-
   }
 };

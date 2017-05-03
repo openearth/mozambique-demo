@@ -1,6 +1,5 @@
 <template>
 	<div>
-    <!-- layer -->
   </div>
 </template>
 <!-- script is lowercase -->

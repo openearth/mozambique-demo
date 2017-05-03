@@ -1,5 +1,7 @@
+import mapboxgl from 'mapbox-gl';
+
 export default {
-  name: 'v-mapbox-layer',
+  name: 'v-mapbox-navigation-control',
   data () {
     return {
     };
@@ -16,7 +18,8 @@ export default {
   },
   methods: {
     deferredMountedTo(map) {
-      map.addLayer(this.options);
+      let control = new mapboxgl.NavigationControl();
+      map.addControl(control);
     }
   }
 };

@@ -14,18 +14,40 @@
         :zoom="10"
         :pitch="60"
         :bearing="-132"
+        :min-zoom="5"
         id="map"
+        ref="map"
         >
         <v-mapbox-source
           :options="source"
           v-for="source in sources"
-          :key="source.id"></v-mapbox-source>
+          :key="source.id" slot="sources"></v-mapbox-source>
         <v-mapbox-layer
           :options="layer"
           v-for="layer in layers"
-          :key="layer.id"></v-mapbox-layer>
+          :key="layer.id" slot="layers"></v-mapbox-layer>
         <v-mapbox-geocoder></v-mapbox-geocoder>
+        <v-mapbox-navigation-control></v-mapbox-navigation-control>
       </v-mapbox>
+      <v-card id="menu">
+        <v-list two-line>
+          <v-list-item v-for="layer in layers" :key="layer.id" >
+            <v-list-tile avatar>
+              <v-list-tile-action >
+                <v-switch v-model="layer.active" />
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ layer.metadata.name }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ layer.metadata.subtitle }} </v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-avatar>
+                <img :src="'static/images/' + layer.metadata.avatar" />
+              </v-list-tile-avatar>
+            </v-list-tile>
+          </v-list-item>
+        </v-list>
+      </v-card>
+
     </div>
     <!-- built files will be auto injected -->
   </body>
