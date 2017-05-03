@@ -21,7 +21,7 @@ new Vue({
           'source-layer': 'building',
           'filter': ['==', 'extrude', 'true'],
           'type': 'fill-extrusion',
-          'minzoom': 11,
+          'minzoom': 8,
           'paint': {
             'fill-extrusion-color': '#88a',
             'fill-extrusion-height': {
@@ -42,7 +42,6 @@ new Vue({
           'source': {
             'url': 'mapbox://siggyf.7seqzord',
             'type': 'vector'
-
           },
 
           'source-layer': 'extremes_100y_lonlat-8rk0vo',
@@ -84,6 +83,59 @@ new Vue({
                 ]
               ]
             }
+          }
+        },
+        {
+          'id': 'layer-0',
+          'type': 'line',
+          'source': {
+            'url': 'mapbox://siggyf.da22dsx8',
+            'type': 'vector'
+          },
+          'source-layer': 'Layer_0',
+          'minzoom': 5,
+          'layout': {},
+          'paint': {
+            'line-color': 'hsla(190, 54%, 58%, 0.49)'
+          }
+        },
+        {
+          'id': 'tracks-1w5m26',
+          'type': 'line',
+          'source': {
+            'url': 'mapbox://siggyf.148qjw3h',
+            'type': 'vector'
+          },
+          'source-layer': 'tracks-1w5m26',
+          'minzoom': 2,
+          'layout': {
+            'visibility': 'visible',
+            'line-join': 'round',
+            'line-round-limit': 1
+          },
+          'paint': {
+            'line-color': {
+              'base': 1,
+              'type': 'exponential',
+              'property': 'wind',
+              'stops': [
+                [
+                  0,
+                  'hsl(114, 67%, 48%)'
+                ],
+                [
+                  100,
+                  'hsl(26, 67%, 48%)'
+                ],
+                [
+                  200,
+                  'hsl(0, 67%, 48%)'
+                ]
+              ]
+            },
+            'line-width': 3,
+            'line-blur': 0,
+            'line-opacity': 0.16
           }
         }
 
