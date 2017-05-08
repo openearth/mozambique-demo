@@ -20,8 +20,90 @@ import './main.scss';
 const vm = new Vue({
   el: '#app',
   data() {
+    let scenarios = [
+      {
+        'id': '10y',
+        'name': 'Período de Retorno: 10 anos',
+        'subtitle': 'Low frequência, Low intensidade',
+        'avatar': '10anos.png',
+        'filter': [
+          '==',
+          'scenario',
+          '10y'
+        ]
+      },
+      {
+        'id': '100y',
+        'name': 'Período de Retorno: 100 anos',
+        'subtitle': 'Média frequência, Média intensidade',
+        'avatar': '100anos.png',
+        'filter': [
+          '==',
+          'scenario',
+          '100y'
+        ]
+      },
+      {
+        'id': '500y',
+        'name': 'Período de Retorno: 500 anos',
+        'subtitle': 'High frequência, High intensidade',
+        'avatar': '500anos.png',
+        'filter': [
+          '==',
+          'scenario',
+          '500y'
+        ]
+      }
+    ];
     return {
+      selectedScenario: _.first(scenarios),
       layers: [
+
+
+        {
+          'id': 'extremes-scenarios',
+          'active': true,
+          'type': 'circle',
+          'metadata': {
+            hidden: true,
+            scenarios: scenarios
+          },
+          'source': {
+            'url': 'mapbox://camvdvries.2oeagw3w',
+            'type': 'vector'
+          },
+          'source-layer': 'extremes-8zrjds',
+          'minzoom': 4,
+          'filter': [
+            '==',
+            'scenario',
+            '10y'
+          ],
+          'layout': {
+            'visibility': 'visible'
+          },
+          'paint': {
+            'circle-color': {
+              'base': 1,
+              'type': 'exponential',
+              'property': 'extreme',
+              'stops': [
+                [
+                  0,
+                  'hsl(123, 70%, 57%)'
+                ],
+                [
+                  3,
+                  'hsl(31, 70%, 57%)'
+                ],
+                [
+                  6,
+                  'hsl(0, 70%, 57%)'
+                ]
+              ]
+            }
+          }
+        },
         {
           'id': '3d-buildings',
           'active': true,
@@ -48,60 +130,6 @@ const vm = new Vue({
             'fill-extrusion-opacity': .6
           }
 
-        },
-        {
-          'id': 'extremes-100y-lonlat-8rk0vo',
-          'active': true,
-          'metadata': {
-            'name': '100 anos',
-            'subtitle': 'Média frequência, Média intensidade',
-            'avatar': '100anos.png'
-          },
-          'type': 'circle',
-          'source': {
-            'url': 'mapbox://siggyf.7seqzord',
-            'type': 'vector'
-          },
-          'source-layer': 'extremes_100y_lonlat-8rk0vo',
-          'layout': {
-            'visibility': 'visible'
-          },
-          'paint': {
-            'circle-color': {
-              'base': 1,
-              'type': 'exponential',
-              'property': 'extreme',
-              'stops': [
-                [
-                  0,
-                  'hsl(123, 70%, 57%)'
-                ],
-                [
-                  3,
-                  'hsl(31, 70%, 57%)'
-                ],
-                [
-                  6,
-                  'hsl(0, 70%, 57%)'
-                ]
-              ]
-            },
-            'circle-radius': {
-              'base': 1,
-              'type': 'exponential',
-              'property': 'extreme',
-              'stops': [
-                [
-                  0,
-                  2
-                ],
-                [
-                  6,
-                  5
-                ]
-              ]
-            }
-          }
         },
         {
           'id': 'layer-0',
@@ -133,8 +161,8 @@ const vm = new Vue({
           },
           'type': 'line',
           'source': {
-            "url": "mapbox://siggyf.148qjw3h",
-            "type": "vector"
+            'url': 'mapbox://siggyf.148qjw3h',
+            'type': 'vector'
           },
           'source-layer': 'tracks-1w5m26',
           'minzoom': 2,
@@ -169,7 +197,7 @@ const vm = new Vue({
             },
             'line-opacity': 0.5,
             'line-blur': 0,
-            'line-width': 1
+            'line-width': 2
           }
         }
 
@@ -191,14 +219,36 @@ const vm = new Vue({
         'load',
         () => {
           this.syncLayerVisibility();
+          this.selectScenario(this.selectedScenario);
         }
       );
     });
 
   },
   watch: {
+    selectedScenario(newScenario, oldScenario) {
+      console.log('setting scenario', newScenario);
+      this.selectScenario(newScenario);
+
+    }
+  },
+  computed: {
+    scenarioLayer: {
+      get: function() {
+        return _.first(
+          _.filter(
+            this.layers,
+            (layer) => { return _.has(layer, 'metadata.scenarios'); }
+          )
+        );
+      }
+    }
   },
   methods: {
+    selectScenario(scenario) {
+      let filter = scenario.filter;
+      this.$refs.map.map.setFilter('extremes-scenarios', filter);
+    },
     syncLayerVisibility() {
       _.each(this.layers, (layer) => {
         if (layer.active) {

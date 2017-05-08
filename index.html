@@ -29,9 +29,42 @@
         <v-mapbox-geocoder></v-mapbox-geocoder>
         <v-mapbox-navigation-control></v-mapbox-navigation-control>
       </v-mapbox>
-      <v-card id="menu">
+      <v-card id="menu" class="elevation-10">
         <v-list two-line>
-          <v-list-item v-for="layer in layers" :key="layer.id" >
+          <v-subheader>
+            Camadas
+          </v-subheader>
+          <v-list-item v-model="scenarioLayer">
+            <v-list-tile avatar >
+              <v-list-tile-action >
+                <v-switch v-model="scenarioLayer.active" />
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  <select
+                    v-model="selectedScenario"
+                    label="Select"
+                    item-text="name"
+                    item-value="name"
+                    light
+                    single-line
+                    auto
+                    >
+                    <option v-for="(scenario, key) in scenarioLayer.metadata.scenarios" :value="scenario">{{ scenario.name }}</option>
+                  </select>
+
+                </v-list-tile-title>
+                <v-list-tile-sub-title>
+                  {{ selectedScenario.subtitle }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-avatar>
+                <img :src="'static/images/' + selectedScenario.avatar" />
+              </v-list-tile-avatar>
+            </v-list-tile>
+          </v-list-item>
+
+          <v-list-item v-for="layer in layers" :key="layer.id"  v-if="!layer.metadata.hidden">
             <v-list-tile avatar>
               <v-list-tile-action >
                 <v-switch v-model="layer.active" />
@@ -43,6 +76,41 @@
               <v-list-tile-avatar>
                 <img :src="'static/images/' + layer.metadata.avatar" />
               </v-list-tile-avatar>
+            </v-list-tile>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-subheader>
+            Legenda
+          </v-subheader>
+          <v-list-item>
+            <v-list-tile>
+              <v-list-tile-action>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>Velocidade máxima do vento [kts]</v-list-tile-title>
+                <v-list-tile-sub-title>
+                  <span style="color: hsl(201, 67%, 48%);">&#9679;</span> <span>0</span>
+                  <span style="color: hsl(98, 67%, 48%);">&#9679;</span> <span>40</span>
+                  <span style="color: hsl(29, 67%, 48%);">&#9679;</span> <span>60</span>
+                  <span style="color: hsl(1, 67%, 48%);">&#9679;</span> <span>90</span>
+
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-item>
+          <v-list-item>
+            <v-list-tile>
+              <v-list-tile-action>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>Altura de sobretensão [m]</v-list-tile-title>
+                <v-list-tile-sub-title>
+                  <span style="color: hsl(123, 70%, 57%);">&#9679;</span> <span>0</span>
+                  <span style="color: hsl(31, 70%, 57%);">&#9679;</span> <span>3</span>
+                  <span style="color: hsl(0, 70%, 57%);">&#9679;</span> <span>6</span>
+
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
             </v-list-tile>
           </v-list-item>
         </v-list>
