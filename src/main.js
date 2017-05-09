@@ -93,8 +93,24 @@ const vm = new Vue({
                   'hsl(123, 70%, 57%)'
                 ],
                 [
+                  1,
+                  'hsl(103, 70%, 57%)'
+                ],
+                [
+                  2,
+                  'hsl(82, 70%, 57%)'
+                ],
+                [
                   3,
-                  'hsl(31, 70%, 57%)'
+                  'hsl(62, 70%, 57%)'
+                ],
+                [
+                  4,
+                  'hsl(41, 70%, 57%)'
+                ],
+                [
+                  5,
+                  'hsl(21, 70%, 57%)'
                 ],
                 [
                   6,
@@ -110,7 +126,7 @@ const vm = new Vue({
           'metadata': {
             'name': 'Cidades, infraestrutura',
             'subtitle': 'Edifícios gerados a partir de OSM',
-            'avatar': 'building.jpg'
+            'avatar': 'city-icon.png'
           },
           'source': 'composite',
           'source-layer': 'building',
@@ -135,9 +151,9 @@ const vm = new Vue({
           'id': 'layer-0',
           'active': true,
           'metadata': {
-            'name': 'Rede',
-            'subtitle': 'Esquematização numérica',
-            'avatar': 'grid.png'
+            'name': 'Malha numérica',
+            'subtitle': 'Usada nas Simulações',
+            'avatar': 'icon_mesh.jpg'
           },
           'type': 'line',
           'source': {
@@ -156,7 +172,7 @@ const vm = new Vue({
           'active': false,
           'metadata': {
             'name': 'Ciclones tropicais',
-            'subtitle': 'Caminhos simulados',
+            'subtitle': 'Trajectórias simuladas',
             'avatar': 'cyclone.png'
           },
           'type': 'line',
@@ -218,6 +234,7 @@ const vm = new Vue({
       this.$refs.map.map.on(
         'load',
         () => {
+          // Implement logo's here
           this.syncLayerVisibility();
           this.selectScenario(this.selectedScenario);
         }
